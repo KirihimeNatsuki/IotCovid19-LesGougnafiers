@@ -1,0 +1,26 @@
+{
+  "name": "iotcovid",
+  "version": "1.0.0",
+  "description": "Projet IOT COVID 19 B2B avec LEMARCHAND Enzo & ZERAH Ethan",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KirihimeNatsuki/IotCovid19-LesGougnafiers.git"
+  },
+  "keywords": [
+    "iot"
+  ],
+  "author": "Gougnafiers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KirihimeNatsuki/IotCovid19-LesGougnafiers/issues"
+  },
+  "homepage": "https://github.com/KirihimeNatsuki/IotCovid19-LesGougnafiers#readme",
+  "dependencies": {
+    "ibmiotf": "^0.2.41",
+    "standard": "^14.3.4"
+  }
+}
