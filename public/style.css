@@ -1,0 +1,24 @@
+.form {
+    display: flex;
+}
+
+body {
+    background-color: black;
+}
+
+h1 {
+    color: #ffffff;
+    animation: rainbowGlow 1s infinite;
+    text-align: center;
+    font-size: 46px;
+}
+
+@keyframes rainbowGlow {
+    0% { text-shadow: 0 0 20px #f00; }
+    16.67% { text-shadow: 0 0 20px #ff7f00; }
+    33.33% { text-shadow: 0 0 20px #ff0; }
+    50% { text-shadow: 0 0 20px #0f0; }
+    66.66% { text-shadow: 0 0 20px #0ff; }
+    83.33% { text-shadow: 0 0 20px #00f; }
+    100% { text-shadow: 0 0 20px #f0f; }
+}
