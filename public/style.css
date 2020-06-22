@@ -1,9 +1,16 @@
 .form {
     display: flex;
+    justify-content: center;
 }
 
 body {
-    background-color: black;
+    background-color: #000000b8;
+    text-align: -webkit-center;
+}
+
+#publisher {
+    flex-direction: column;
+    max-width: 300px;
 }
 
 h1 {
@@ -21,4 +28,13 @@ h1 {
     66.66% { text-shadow: 0 0 20px #0ff; }
     83.33% { text-shadow: 0 0 20px #00f; }
     100% { text-shadow: 0 0 20px #f0f; }
+}
+
+h2 {
+    color: #ff5722;
+}
+
+label {
+    color: white;
+    font-size: 20px;
 }

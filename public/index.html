@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Application d'IOT Covid des Gnougnafiers</title>
-    <link rel="stylesheet" type='text/css' href='style.css'>
-    <link rel="icon" href="images/corona.png" />
-    <script src='env.json'></script>
-</head>
-<body>
-<h1>Application Stop-Covid IOT des Gnougnafiers</h1>
-<div classe='form'>
-    <input type="text" id="nomContact">
-    <button id="subscribe">Ajouter device</button>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Application d'IOT Covid des Gnougnafiers</title>
+        <link rel="stylesheet" type='text/css' href='style.css'>
+        <link rel="icon" href="images/corona.png" />
+        <script src='env.json'></script>
+    </head>
+    <header>
+        <h1>Application Stop-Covid IOT des Gnougnafiers</h1>
+    </header>
+    <body>
+        <h2>Ajouter un device</h2>
+        <div class='form'>
+            <input type="text" id="device_id">
+            <button id="create">Ajouter</button>
+        </div>
+        <h2>Publier des informations</h2>
+        <div class='form' id="publisher">
+            <label>Etat de santé</label><br>
+            <select name='etat' id='etat'>
+                <option value="sain">Sain</option>
+                <option value="suspect">Suspect</option>
+                <option value="malade">Malade</option>
+            </select><br>
+            <label>Température :</label><br>
+            <input type="number" id="temp">
+            <button id="publish">Publier</button>
+        </div>
+        <h2>S'abonner à un device</h2>
+        <div class='form'>
+            <input type="text" id="nomDevice">
+            <button id="subscribe">Subscribe</button>
+        </div>
+        <script src="bundle.js"></script>
+    </body>
 </html>

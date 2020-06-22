@@ -1,93 +1,119 @@
 /**
- * DEPENDANCES
- */
-const client = require('ibmiotf');
-const config = JSON.parse(data);
+    Liste des dépendances
+*/
+const client = require('ibmiotf')
+const buffer = require('buffer/').Buffer
+const param = JSON.parse(data)
 
 /**
- * CONFIG VARIABLES GLOBALES
- */
-const org = config.org;
-const deviceType = config.deviceType;
-const apiKey = config.apiKey;
-const tokenApi = config.tokenApi;
-window.device = {};
+    Configuration globale
+*/
+
+const org = param.org
+const deviceType = param.devicetype
+const apiKey = param.apiKey
+const apiToken = param.apiToken
+const date_actuelle = new Date()
 
 /**
- * CONFIG APPLI
- */
-let appClientConfig = {
-    "org": org,
-    "id": "myapp",
+    Config application
+*/
+
+const appClientConfig = {
+    org: org,
+    id: "monappli",
     "auth-key": apiKey,
-    "auth-token": tokenApi,
-    "type" : "shared"
+    "auth-token": apiToken,
+    type : "shared"
 };
 
-let appClient = new client.IotfApplication(appClientConfig);
+const appClient = new client.IotfApplication(appClientConfig);
 appClient.log.setLevel('debug');
 appClient.connect();
 
-/**
- * FONCTIONS
- */
-
-function getDeviceId() {
-    window.device.id = prompt("Enter a unique ID of at least 8 characters containing only letters and numbers (Warning : it will be displayed on the dashboard!):");
-    if (deviceIdRegEx.test(window.device.id) === true) {
-        console.log("Connecting with device id: " + window.device.id);
-        createDevice();
-    } else {
-        window.alert("Device ID must be atleast 8 characters in length, and contain only letters and numbers.");
-        getDeviceId();
-    }
-}
-
-function createDevice() {
-    let xhr = new XMLHttpRequest();
-    let url = document.location.href + "create/" + window.device.id;
-    console.log("url : " + url);
-    xhr.open("POST", url, true);
-
-    xhr.onreadystatechange = () => {
-        if(xhr.readyState === 4 && xhr.status === 200) {
-            let temp = JSON.parse(xhr.responseText);
-            window.device.authToken = temp.authToken;
-            window.device.clientId = temp.clientId;
-        }
-    }
-    xhr.send();
-}
-
-function addDevice() {
-    let nomContact = document.getElementById("nomContact").value;
-    appClient.subscribeToDeviceEvents(deviceType, nomContact, "id");
-}
-
-/**
- * CODE PRINCIPAL
- */
 appClient.on("connect", function () {
     console.log("Connecté au broker IBM");
-    appClient.subscribeToDeviceEvents(deviceType, window.device.id,"id");
+    appClient.subscribeToDeviceEvents(deviceType, window.device_id,"sante");
 });
 
+
+/**
+ Fonctions de l'appli
+ */
+
+function getDeviceForConnect () {
+    window.device_id = prompt('Entrer un ID Client !')
+    return window.device_id
+}
+
+function publish () {
+    const myQosLevel=0
+    const myDatasante = { etat: document.getElementById('etat').value }
+    const myDatatemp = {  temp: document.getElementById('temp').value }
+    deviceClient.publish("telemetry","json", myDatatemp);
+    deviceClient.publish("sante","json", myDatasante);
+}
+
+function subscribe () {
+    const nomDevice = document.getElementById('nomDevice').value
+    try {
+        appClient.subscribeToDeviceEvents(deviceType, nomDevice, 'sante')
+    } catch(error) {
+        console.warn(error);
+    }
+}
+
+
 appClient.on("deviceEvent", function (deviceType, deviceId, eventType, format, payload) {
-    console.log("Device Event from : "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
-    let data = JSON.parse(payload);
-    let tRow = document.createElement("tr");
-    let nomContact = document.createElement("td");
-    let etatContact = document.createElement("td");
-    nomContact.innerHTML = data.deviceId;
-    etatContact.innerHTML = data.etat;
-    tRow.appendChild(nomContact);
-    tRow.appendChild(etatContact)
-    document.getElementById('contacts').appendChild(tRow);
+    console.log("Device Event from :: "+deviceType+" : "+deviceId+" of event "+eventType+" with payload : "+payload);
+
 });
+
+
+
 
 appClient.on("error", function (err) {
     console.log("Error : "+err);
 });
 
 
-document.getElementById("ajouter").addEventListener("click", addDevice);
+window.onload = getDeviceForConnect()
+document.getElementById('publish').addEventListener('click', publish)
+document.getElementById('subscribe').addEventListener('click', subscribe)
+
+
+
+
+
+
+
+
+/*
+/**
+    Config client
+*/
+/*
+
+const deviceClientConfig = {
+    "org": org,
+    "id": window.device_id,
+    "type": deviceType,
+    "auth-method": "token",
+    "auth-token": "citrouille"
+};
+
+const deviceClient = new client.IotfDevice(deviceClientConfig);
+deviceClient.log.setLevel('trace');
+deviceClient.connect();
+
+deviceClient.on("connect", function () {
+    console.log("--- Je suis connecté");
+    const myQosLevel=0
+});
+
+
+
+    var myData={'temp' : 37, 'fc' : 60};
+    myData = JSON.stringify(myData);
+    appClient.publishDeviceEvent("DTC_test","avemoi", "telemetry", "json", myData);
+ */

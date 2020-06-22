@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/KirihimeNatsuki/IotCovid19-LesGougnafiers#readme",
   "dependencies": {
+    "buffer": "^5.6.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "ibmiotf": "^0.2.41",
